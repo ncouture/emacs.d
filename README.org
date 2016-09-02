@@ -1,0 +1,22 @@
+* Simple GNU/Emacs Configuration
+** Configuration
+*** Org-Mode
+- Bernt Hanson's configuration (http://doc.norang.ca/org-mode.html)
+*** Elpy
+- Default Elpy configuration
+** Structure 
+The structure was copied from Steve Purcell's emacs.d (https://github.com/purcell/emacs.d) and
+will allow you to reuse his el/init scripts with little effort.
+** Installation
+#+begin_src shell
+# backup any existing .emacs.d
+mv ~/emacs.d ~/emacs.d.bake
+# clone
+git clone https://github.com/ncouture/emacs.d ~/.emacs.d
+# launch Emacs
+emacs
+#+end_src
+*** Step-by-step
+#+begin_src ascii
+M-x nc/intro
+#+end_src
