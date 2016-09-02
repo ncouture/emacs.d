@@ -1,5 +1,6 @@
 * Simple GNU/Emacs Configuration
 ** Configuration
+This packages includes the following configurations:
 *** Org-Mode
 - Bernt Hanson's configuration (http://doc.norang.ca/org-mode.html)
 *** Elpy
