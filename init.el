@@ -15,4 +15,5 @@
 (unless (server-running-p)
   (server-start))
 
+(require 'init-intro)
 (provide 'init)
