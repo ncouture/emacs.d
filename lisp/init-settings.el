@@ -1,6 +1,6 @@
 ;; my browser is firejail chromium
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program (expand-file-name "~/bin/chromium"))
+      browse-url-generic-program (expand-file-name "~/bin/firefox"))
 
 ;; impose gnutls-cli when supported -- this requires an initial
 ;; manual execution of gnutls-cli --strict-tofu -p <port> <host>

@@ -7,6 +7,7 @@
 (require 'init-multiple-cursors)
 (require 'init-utils)
 (require 'init-ido)
+(require 'init-neotree)
 (require 'init-org-mode)
 (require 'init-settings)
 (require-package 'gnuplot)
