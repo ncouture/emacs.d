@@ -4,6 +4,8 @@
 (elpy-enable)
 (setq elpy-rpc-backend "rope")
 
+(setenv "WORKON_HOME" (expand-file-name "~/.virtualenvs"))
+
 (defun elpy-goto-definition-or-rgrep ()
   "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
     (interactive)
