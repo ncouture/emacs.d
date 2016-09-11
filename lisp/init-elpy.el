@@ -2,6 +2,7 @@
 (require 'elpy)
 
 (elpy-enable)
+;;(setq elpy-rpc-backend "jedi")
 (setq elpy-rpc-backend "rope")
 
 (setenv "WORKON_HOME" (expand-file-name "~/.virtualenvs"))

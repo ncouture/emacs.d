@@ -173,7 +173,7 @@
                                  (org-agenda-files :maxlevel . 9))))
 
 ; Use full outline paths for refile targets - we file directly with IDO
-(setq org-refile-use-outline-path t)
+(setq org-refile-use-outline-path (quote file))
 
 ; Targets complete directly with IDO
 (setq org-outline-path-complete-in-steps nil)
