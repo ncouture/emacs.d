@@ -55,7 +55,6 @@
 (global-set-key (kbd "C-c sa") 'bh/show-org-agenda)
 (global-set-key (kbd "C-c sb") 'bbdb)
 (global-set-key (kbd "C-c sc") 'calendar)
-(global-set-key (kbd "C-c C-g") 'gnus)
 (global-set-key (kbd "C-c  h") 'bh/hide-other)
 (global-set-key (kbd "<f9> n") 'bh/toggle-next-task-display)
 
@@ -77,7 +76,7 @@
 (global-set-key (kbd "M-<f9>") 'org-toggle-inline-images)
 (global-set-key (kbd "C-x n r") 'narrow-to-region)
 (global-set-key (kbd "C-c C-n") 'next-buffer)
-(global-set-key (kbd "C-<f12>") 'bh/save-then-publish)
+(global-set-key (kbd "C-c C-x C-x") 'bh/save-then-publish)
 (global-set-key (kbd "C-c c") 'org-capture)
 
 (defun bh/hide-other ()
@@ -812,10 +811,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 
 ;; Explicitly load required exporters
 (require 'ox-html)
+(require 'ox-rss)
 (require 'ox-latex)
 (require 'ox-ascii)
 
-(setq org-ditaa-jar-path "~/git/org-mode/contrib/scripts/ditaa.jar")
+(setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 (setq org-plantuml-jar-path "~/java/plantuml.jar")
 
 (add-hook 'org-babel-after-execute-hook 'bh/display-inline-images 'append)
@@ -849,44 +849,43 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 ; of setting this -- see the docstring for details
 (setq org-confirm-babel-evaluate nil)
 
-; Use fundamental mode when editing plantuml blocks with C-c '
+                                        ; Use fundamental mode when editing plantuml blocks with C-c '
 (add-to-list 'org-src-lang-modes (quote ("plantuml" . fundamental)))
 
 ;; Don't enable this because it breaks access to emacs from my Android phone
 (setq org-startup-with-inline-images nil)
 
-; experimenting with docbook exports - not finished
+;; experimenting with docbook exports - not finished
 (setq org-export-docbook-xsl-fo-proc-command "fop %s %s")
 (setq org-export-docbook-xslt-proc-command "xsltproc --output %s /usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl %s")
-;
-; Inline images in HTML instead of producting links to the image
+;;
+;; Inline images in HTML instead of producting links to the image
 (setq org-html-inline-images t)
-; Do not use sub or superscripts - I currently don't need this functionality in my documents
+;; Do not use sub or superscripts - I currently don't need this functionality in my documents
 (setq org-export-with-sub-superscripts nil)
-; Use org.css from the norang website for export document stylesheets
-(setq org-html-head-extra "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />")
+;; Use org.css from the norang website for export document stylesheets
+(setq org-html-head-extra "<link rel=\"ALTERNATE stylesheet\" href=\"https://ncouture.github.io/worg/css/worg.css\" type=\"text/css\" />")
 (setq org-html-head-include-default-style nil)
-; Do not generate internal css formatting for HTML exports
+;; Do not generate internal css formatting for HTML exports
 (setq org-export-htmlize-output-type (quote css))
-; Export with LaTeX fragments
+;; Export with LaTeX fragments
 (setq org-export-with-LaTeX-fragments t)
-; Increase default number of headings to export
+;; Increase default number of headings to export
 (setq org-export-headline-levels 6)
 
-; List of projects
-; norang       - http://www.norang.ca/
-; doc          - http://doc.norang.ca/
-; org-mode-doc - http://doc.norang.ca/org-mode.html and associated files
-; org          - miscellaneous todo lists for publishing
+;; List of projects
+;; norang       - http://www.norang.ca/
+;; doc          - http://doc.norang.ca/
+;; org-mode-doc - http://doc.norang.ca/org-mode.html and associated files
+;; org          - miscellaneous todo lists for publishing
 (setq org-publish-project-alist
-      ;
-      ; http://www.norang.ca/  (norang website)
-      ; norang-org are the org-files that generate the content
-      ; norang-extra are images and css files that need to be included
-      ; norang is the top-level project that gets published
-      (quote (("norang-org"
-               :base-directory "~/git/www.norang.ca"
-               :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs"
+      ;; http://www.norang.ca/  (norang website)
+      ;; norang-org are the org-files that generate the content
+      ;; norang-extra are images and css files that need to be included
+      ;; norang is the top-level project that gets published
+      (quote (("ghpages"
+               :base-directory "~/git/ncouture.github.io/"
+               :publishing-directory "~/git/ncouture.github.io/"
                :recursive t
                :table-of-contents nil
                :base-extension "org"
@@ -894,7 +893,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
                :style-include-default nil
                :section-numbers nil
                :table-of-contents nil
-               :html-head "<link rel=\"stylesheet\" href=\"norang.css\" type=\"text/css\" />"
+               :html-head "<link rel=\"stylesheet\" href=\"worg.css\" type=\"text/css\" />"
                :author-info nil
                :creator-info nil)
               ("norang-extra"
@@ -906,11 +905,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
                :author nil)
               ("norang"
                :components ("norang-org" "norang-extra"))
-              ;
-              ; http://doc.norang.ca/  (norang website)
-              ; doc-org are the org-files that generate the content
-              ; doc-extra are images and css files that need to be included
-              ; doc is the top-level project that gets published
+              ;;
+              ;; http://doc.norang.ca/  (norang website)
+              ;; doc-org are the org-files that generate the content
+              ;; doc-extra are images and css files that need to be included
+              ;; doc is the top-level project that gets published
               ("doc-org"
                :base-directory "~/git/doc.norang.ca/"
                :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
@@ -957,9 +956,9 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
                :author nil)
               ("doc-private"
                :components ("doc-private-org" "doc-private-extra"))
-              ;
-              ; Miscellaneous pages for other websites
-              ; org are the org-files that generate the content
+              ;;
+              ;; Miscellaneous pages for other websites
+              ;; org are the org-files that generate the content
               ("org-org"
                :base-directory "~/git/org/"
                :publishing-directory "/ssh:www-data@www:~/org"
@@ -972,12 +971,12 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
                :html-head "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
                :author-info nil
                :creator-info nil)
-              ;
-              ; http://doc.norang.ca/  (norang website)
-              ; org-mode-doc-org this document
-              ; org-mode-doc-extra are images and css files that need to be included
-              ; org-mode-doc is the top-level project that gets published
-              ; This uses the same target directory as the 'doc' project
+              ;;
+              ;; http://doc.norang.ca/  (norang website)
+              ;; org-mode-doc-org this document
+              ;; org-mode-doc-extra are images and css files that need to be included
+              ;; org-mode-doc is the top-level project that gets published
+              ;; This uses the same target directory as the 'doc' project
               ("org-mode-doc-org"
                :base-directory "~/git/org-mode-doc/"
                :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
@@ -1001,12 +1000,12 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
                :author nil)
               ("org-mode-doc"
                :components ("org-mode-doc-org" "org-mode-doc-extra"))
-              ;
-              ; http://doc.norang.ca/  (norang website)
-              ; org-mode-doc-org this document
-              ; org-mode-doc-extra are images and css files that need to be included
-              ; org-mode-doc is the top-level project that gets published
-              ; This uses the same target directory as the 'doc' project
+              ;;
+              ;; http://doc.norang.ca/  (norang website)
+              ;; org-mode-doc-org this document
+              ;; org-mode-doc-extra are images and css files that need to be included
+              ;; org-mode-doc is the top-level project that gets published
+              ;; This uses the same target directory as the 'doc' project
               ("tmp-org"
                :base-directory "/tmp/publish/"
                :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs/tmp"
@@ -1035,11 +1034,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
               ("tmp"
                :components ("tmp-org" "tmp-extra")))))
 
-; I'm lazy and don't want to remember the name of the project to publish when I modify
-; a file that is part of a project.  So this function saves the file, and publishes
-; the project that includes this file
-;
-; It's bound to C-S-F12 so I just edit and hit C-S-F12 when I'm done and move on to the next thing
+;; I'm lazy and don't want to remember the name of the project to publish when I modify
+;; a file that is part of a project.  So this function saves the file, and publishes
+;; the project that includes this file
+;;
+;; It's bound to C-S-F12 so I just edit and hit C-S-F12 when I'm done and move on to the next thing
 (defun bh/save-then-publish (&optional force)
   (interactive "P")
   (save-buffer)
@@ -1058,22 +1057,22 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 
 (setq org-export-allow-BIND t)
 
-; Erase all reminders and rebuilt reminders for today from the agenda
+;; Erase all reminders and rebuilt reminders for today from the agenda
 (defun bh/org-agenda-to-appt ()
   (interactive)
   (setq appt-time-msg-list nil)
   (org-agenda-to-appt))
 
-; Rebuild the reminders everytime the agenda is displayed
+;; Rebuild the reminders everytime the agenda is displayed
 (add-hook 'org-finalize-agenda-hook 'bh/org-agenda-to-appt 'append)
 
-; This is at the end of my .emacs - so appointments are set up when Emacs starts
+;; This is at the end of my .emacs - so appointments are set up when Emacs starts
 (bh/org-agenda-to-appt)
 
-; Activate appointments so we get notifications
+;; Activate appointments so we get notifications
 (appt-activate t)
 
-; If we leave Emacs running overnight - reset the appointments one minute after midnight
+;; If we leave Emacs running overnight - reset the appointments one minute after midnight
 (run-at-time "24:01" nil 'bh/org-agenda-to-appt)
 
 ;; Enable abbrev-mode
@@ -1328,13 +1327,13 @@ so change the default 'F' binding in the agenda to allow both"
   (let (num-project-left current-project)
     (unless (marker-position org-agenda-restrict-begin)
       (goto-char (point-min))
-      ; Clear all of the existing markers on the list
+      ;; Clear all of the existing markers on the list
       (while bh/project-list
         (set-marker (pop bh/project-list) nil))
       (re-search-forward "Tasks to Refile")
       (forward-visible-line 1))
 
-    ; Build a new project marker list
+    ;; Build a new project marker list
     (unless bh/project-list
       (while (< (point) (point-max))
         (while (and (< (point) (point-max))
@@ -1347,13 +1346,13 @@ so change the default 'F' binding in the agenda to allow both"
           (add-to-list 'bh/project-list (copy-marker (org-get-at-bol 'org-hd-marker)) 'append))
         (forward-visible-line 1)))
 
-    ; Pop off the first marker on the list and display
+    ;; Pop off the first marker on the list and display
     (setq current-project (pop bh/project-list))
     (when current-project
       (org-with-point-at current-project
         (setq bh/hide-scheduled-and-waiting-next-tasks nil)
         (bh/narrow-to-project))
-      ; Remove the marker
+      ;; Remove the marker
       (setq current-project nil)
       (org-agenda-redo)
       (beginning-of-buffer)
@@ -1463,44 +1462,44 @@ so change the default 'F' binding in the agenda to allow both"
 Late deadlines first, then scheduled, then non-late deadlines"
   (let (result num-a num-b)
     (cond
-     ; time specific items are already sorted first by org-agenda-sorting-strategy
+     ;; time specific items are already sorted first by org-agenda-sorting-strategy
 
-     ; non-deadline and non-scheduled items next
+     ;; non-deadline and non-scheduled items next
      ((bh/agenda-sort-test 'bh/is-not-scheduled-or-deadline a b))
 
-     ; deadlines for today next
+     ;; deadlines for today next
      ((bh/agenda-sort-test 'bh/is-due-deadline a b))
 
-     ; late deadlines next
+     ;; late deadlines next
      ((bh/agenda-sort-test-num 'bh/is-late-deadline '> a b))
 
-     ; scheduled items for today next
+     ;; scheduled items for today next
      ((bh/agenda-sort-test 'bh/is-scheduled-today a b))
 
-     ; late scheduled items next
+     ;; late scheduled items next
      ((bh/agenda-sort-test-num 'bh/is-scheduled-late '> a b))
 
-     ; pending deadlines last
+     ;; pending deadlines last
      ((bh/agenda-sort-test-num 'bh/is-pending-deadline '< a b))
 
-     ; finally default to unsorted
+     ;; finally default to unsorted
      (t (setq result nil)))
     result))
 
 (defmacro bh/agenda-sort-test (fn a b)
   "Test for agenda sort"
   `(cond
-    ; if both match leave them unsorted
+    ;; if both match leave them unsorted
     ((and (apply ,fn (list ,a))
           (apply ,fn (list ,b)))
      (setq result nil))
-    ; if a matches put a first
+    ;; if a matches put a first
     ((apply ,fn (list ,a))
      (setq result -1))
-    ; otherwise if b matches put b first
+    ;; otherwise if b matches put b first
     ((apply ,fn (list ,b))
      (setq result 1))
-    ; if none match leave them unsorted
+    ;; if none match leave them unsorted
     (t nil)))
 
 (defmacro bh/agenda-sort-test-num (fn compfn a b)
@@ -1592,7 +1591,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
                                    (gnus . org-gnus-no-new-news)
                                    (file . find-file))))
 
-; Use the current window for C-c ' source editing
+;; Use the current window for C-c ' source editing
 (setq org-src-window-setup 'current-window)
 
 (setq org-log-done (quote time))
@@ -1601,7 +1600,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq org-clock-sound "/usr/local/lib/tngchime.wav")
 
-; Enable habit tracking (and a bunch of other modules)
+;; Enable habit tracking (and a bunch of other modules)
 (setq org-modules (quote (org-bbdb
                           org-bibtex
                           org-crypt
@@ -1620,7 +1619,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
                           org-wl
                           org-w3m)))
 
-; position the habit graph on the agenda to the right of the default
+;; position the habit graph on the agenda to the right of the default
 (setq org-habit-graph-column 50)
 
 (run-at-time "06:00" 86400 '(lambda () (setq org-habit-show-habits t)))
@@ -1628,10 +1627,10 @@ Late deadlines first, then scheduled, then non-late deadlines"
 (global-auto-revert-mode t)
 
 (require 'org-crypt)
-; Encrypt all entries before saving
+;; Encrypt all entries before saving
 (org-crypt-use-before-save-magic)
 (setq org-tags-exclude-from-inheritance (quote ("crypt")))
-; GPG key to use for encryption
+;; GPG key to use for encryption
 (setq org-crypt-key "F0B66B40")
 
 (setq org-crypt-disable-auto-save nil)
@@ -1770,7 +1769,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq org-link-mailto-program (quote (compose-mail "%a" "%s")))
 
-;(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+;;(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (require 'smex)
 (smex-initialize)
 
@@ -1794,7 +1793,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
                             ("\\.x?html?\\'" . system)
                             ("\\.pdf\\'" . system))))
 
-; Overwrite the current window with the agenda
+;; Overwrite the current window with the agenda
 (setq org-agenda-window-setup 'current-window)
 
 (setq org-clone-delete-id t)
@@ -1877,8 +1876,8 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq org-catch-invisible-edits 'error)
 
-(setq org-export-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(setq org-export-coding-system 'utf-8-unix)
+(prefer-coding-system 'utf-8-unix)
 (set-charset-priority 'unicode)
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 

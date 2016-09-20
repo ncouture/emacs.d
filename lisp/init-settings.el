@@ -17,7 +17,7 @@
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (setq-default
- blink-cursor-interval 0.2
+ blink-cursor-interval 0.1
  case-fold-search t
  column-number-mode t
  delete-selection-mode t
