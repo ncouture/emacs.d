@@ -7,8 +7,9 @@
 ;; to store a host's SSL certificate before it can be accepted
 (if (fboundp 'gnutls-available-p)
     (fmakunbound 'gnutls-available-p))
-(setq tls-program '("gnutls-cli --strict-tofu -p %p %h")
-      imap-ssl-program '("gnutls-cli --strict-tofu -p %p %s"))
+
+(setq tls-program '("/usr/local/bin/gnutls-cli --strict-tofu -p %p %h")
+      imap-ssl-program '("/usr/local/bin/gnutls-cli --strict-tofu -p %p %s"))
 
 (defun bash ()
   (interactive)
@@ -79,4 +80,7 @@
 (require-package 'disable-mouse)
 (global-disable-mouse-mode)
 
+(setq erc-hide-list '("JOIN" "PART" "QUIT"))
+
 (provide 'init-settings)
+

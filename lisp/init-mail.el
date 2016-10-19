@@ -1,5 +1,5 @@
 ;; mu4a + smtpmail config
-(add-to-list 'load-path "/usr/local/share/emacs/")  ;; this is where `make' installs mu4e
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")  ;; this is where `make' installs mu4e
 
 (require 'mu4e)
 (require 'smtpmail)
