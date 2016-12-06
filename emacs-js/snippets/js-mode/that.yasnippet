@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: that
+# key: that
+# --
+
+function ${1:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}(spec, my) {
+	spec = spec || {};
+	my = my || {};
+
+	var that = $2(spec, my);
+
+	$0
+
+	return that;
+}
+
+return $1;
