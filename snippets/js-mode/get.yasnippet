@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: get
+# key: get
+# --
+
+that.get${1:$(s-upper-camel-case yas-text)} = function() {
+	return my.$1;
+};
