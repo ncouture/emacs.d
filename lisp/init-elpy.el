@@ -1,9 +1,13 @@
 (require-package 'elpy)
+(require-package 'sphinx-doc)
 (require 'elpy)
+(require 'sphinx-doc)
 
 (elpy-enable)
-;;(setq elpy-rpc-backend "jedi")
 (setq elpy-rpc-backend "rope")
+(add-hook 'python-mode-hook (lambda ()
+                              (require 'sphinx-doc)
+                              (sphinx-doc-mode t)))
 
 (setenv "WORKON_HOME" (expand-file-name "~/.virtualenvs"))
 
