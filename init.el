@@ -53,8 +53,15 @@
 (unless (server-running-p)
   (server-start))
 
-(setq default-line-spacing 2)
-(set-face-attribute 'default nil :height 180)
+;;(load-theme 'misterioso)
+
+(set-default-font "Mikachan-16")
+(setq default-line-spacing 0)
+(set-face-attribute 'default nil :height 160)
+
+(set-default-font "7x14")
+(setq default-line-spacing 0)
+(set-face-attribute 'default nil :height 100)
 
 (require 'init-intro)
 (provide 'init)
