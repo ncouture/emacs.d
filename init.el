@@ -61,7 +61,7 @@
 
 (set-default-font "7x14")
 (setq default-line-spacing 0)
-(set-face-attribute 'default nil :height 100)
+;;(set-face-attribute 'default nil :height 100)
 
 (require 'init-intro)
 (provide 'init)
