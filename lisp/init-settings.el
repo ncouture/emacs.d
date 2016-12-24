@@ -5,8 +5,9 @@
 ;; impose gnutls-cli when supported -- this requires an initial
 ;; manual execution of gnutls-cli --strict-tofu -p <port> <host>
 ;; to store a host's SSL certificate before it can be accepted
-(if (fboundp 'gnutls-available-p)
-    (fmakunbound 'gnutls-available-p))
+
+;; (if (fboundp 'gnutls-available-p)
+;; (fmakunbound 'gnutls-available-p))
 
 (setq tls-program '("/usr/local/bin/gnutls-cli --strict-tofu -p %p %h")
       imap-ssl-program '("/usr/local/bin/gnutls-cli --strict-tofu -p %p %s"))

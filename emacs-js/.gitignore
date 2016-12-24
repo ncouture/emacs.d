@@ -1,0 +1,7 @@
+# Compiled
+*.elc
+
+# Packaging
+.cask
+/widgetjs/.ecukes-failing-scenarios
+/snippets/js-mode/.yas-compiled-snippets.el

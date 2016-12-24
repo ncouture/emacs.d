@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: getset
+# key: gs
+# expand-env: ((yas-indent-line 'fixed))
+# --
+
+that.get${1:$(s-upper-camel-case yas-text)} = function() {
+	return my.$1;
+};
+
+that.set${1:$(s-upper-camel-case yas-text)} = function($2) {
+	my.$1 = $2;
+};

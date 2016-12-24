@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: set
+# key: set
+# expand-env: ((yas-indent-line 'fixed))
+# --
+
+that.set${1:$(s-upper-camel-case yas-text)} = function($2) {
+	my.$1 = $2;
+};
