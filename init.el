@@ -15,7 +15,7 @@
 (require 'init-utils)
 (require 'init-ido)
 (require 'init-mmm)
-;(require 'init-neotree)
+;;(require 'init-neotree)
 (require 'init-org-mode)
 (require 'init-settings)
 (require 'init-utils)
@@ -55,13 +55,17 @@
 
 ;;(load-theme 'misterioso)
 
-(set-default-font "Mikachan-16")
-(setq default-line-spacing 0)
-(set-face-attribute 'default nil :height 160)
-
-(set-default-font "7x14")
-(setq default-line-spacing 0)
+;;(set-default-font "Mikachan-16")
+;;(setq default-line-spacing 0)
+;;(set-face-attribute 'default nil :height 160)
+;;(set-default-font "7x14")
+;;(setq default-line-spacing 0)
 ;;(set-face-attribute 'default nil :height 100)
+;;(set-default-font "Inconsolata-14")
+;;(set-default-font "DejaVuSansMono-13")
+;;(set-default-font "TlwgMono-12")
+(ignore-errors
+  (set-default-font "FantasqueSansMono-14"))
 
 (require 'init-intro)
 (provide 'init)
