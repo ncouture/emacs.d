@@ -40,6 +40,7 @@
 (require 'init-sessions)
 (require 'init-whitespace)
 (require 'init-editorconfig)
+(require 'init-go)
 (require-package 'beacon)
 (require-package 'gnuplot)
 
