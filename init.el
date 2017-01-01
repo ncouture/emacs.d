@@ -37,7 +37,7 @@
 (require 'init-folding)
 (require 'init-recentf)
 (require 'init-slime)
-(require 'init-sessions)
+;;(require 'init-sessions)
 (require 'init-whitespace)
 (require 'init-editorconfig)
 (require 'init-go)

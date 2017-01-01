@@ -118,7 +118,7 @@ Now go and edit ~/.emacs.d/init.el and comment out the following lines to disabl
 	    (setq pt (point))
 	    (push-mark (point) nil t)
 	    (insert prompt-string)
-	    (read-input interactive-string)
+	    (read-event interactive-string)
 	    (kill-region pt (point))))
       (insert (char-to-string char)))))
 
