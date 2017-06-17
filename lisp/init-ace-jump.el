@@ -2,6 +2,6 @@
 (require 'ace-jump-mode)
 
 (define-key global-map
-  (kbd "C-c C-r") 'ace-jump-mode)
+  (kbd "C-c C-j") 'ace-jump-mode)
 
 (provide 'init-ace-jump)

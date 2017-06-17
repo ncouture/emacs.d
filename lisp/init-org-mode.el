@@ -45,7 +45,7 @@
 ;;
 (if (boundp 'org-user-agenda-files)
     (setq org-agenda-files org-user-agenda-files)
-  (setq org-agenda-files (quote ("~/git/org"))))
+  (setq org-agenda-files (quote ("~/KISSCALLS/org"))))
 
 ;; Custom Key Bindings
 (global-set-key (kbd "C-c C-t") 'bh/org-todo)

@@ -36,10 +36,11 @@
 
 (let ((packages-to-load '(amd-mode
                           company-tern
+                          eslintd-fix
                           flycheck
                           gulp-task-runner
                           grunt
-                          jade
+                          indium
                           js2-mode
                           js2-refactor
                           projectile

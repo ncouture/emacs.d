@@ -33,6 +33,7 @@
 (require 'js2-mode)
 (require 'js2-refactor)
 (require 'amd-mode)
+(require 'eslintd-fix)
 (require 'tern)
 (require 'widgetjs)
 (require 'gulp-task-runner)
@@ -41,9 +42,15 @@
 (require 'grunt)
 (require 'xref-js2)
 (require 'yasnippet)
-(require 'jade)
+(require 'indium)
+
+(if (executable-find "eslint_d")
+    (setq flycheck-javascript-eslint-executable "eslint_d")
+  (warn "emacs-js: You might want to install eslint_d: sudo npm install -g eslint_d."))
 
 (add-hook 'js-mode-hook #'setup-js-buffer)
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 (defun setup-js-buffer ()
   (setq mode-name "JS")
@@ -55,9 +62,13 @@
     (flycheck-mode -1))
   (js2-minor-mode 1)
   (js2-refactor-mode 1)
-  (jade-interaction-mode 1)
+  (js2-imenu-extras-mode)
+  (indium-interaction-mode 1)
   (amd-mode 1)
   (widgetjs-mode 1)
+
+  ;; add eslintd-fix support
+  (eslintd-fix-mode)
 
   ;; add xref-js2 support
   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
@@ -67,8 +78,32 @@
   ;; we use tabs in JS files
   (setq tab-width 4)
   (setq indent-tabs-mode t)
+  (setq js-switch-indent-offset 4)
 
-  (yas-minor-mode +1))
+  (setq js2-global-externs '("define" "require" "app"))
+  (setq js2-include-node-externs t)
+  (setq js2-pretty-multiline-declarations nil)
+
+  (yas-minor-mode +1)
+
+  (set (make-local-variable 'company-dabbrev-ignore-case) nil)
+  (set (make-local-variable 'company-dabbrev-downcase) nil))
+
+(defun add-jasmine-externs ()
+  "Add jasmine global names to `js2-additional-externs'."
+  (mapc (lambda (extern) (add-to-list 'js2-additional-externs extern))
+        '("jasmine"
+          "describe" "fdescribe" "it" "fit"
+          "expect" "spyOn"
+          "beforeEach" "afterEach" "beforeAll" "afterAll")))
+
+(defun setup-js2-init ()
+  "Hook run when js2 is initializing a buffer."
+  (when (and buffer-file-name
+             (string-match-p "-tests?.js$" buffer-file-name))
+    (add-jasmine-externs)))
+
+(add-hook 'js2-init-hook #'setup-js2-init)
 
 ;; We have JS files in Scripts directories, ignore that
 (add-to-list 'xref-js2-ignored-dirs "Scripts")
@@ -85,6 +120,7 @@
 (define-key tern-mode-keymap (kbd "M-,") nil)
 
 (js2r-add-keybindings-with-prefix "C-c C-r")
+(setq js2r-always-insert-parens-around-arrow-function-params t)
 
 (define-key js-mode-map (kbd "M-.") nil)
 (define-key js-mode-map (kbd "C-c C-j") nil)

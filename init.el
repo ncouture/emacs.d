@@ -1,14 +1,18 @@
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+;;; package --- ncoture's .emacs.d
+;;; Commentary:
+;;; Hmph...
+;;; Code:
 (package-initialize)
+
+(require 'package)
+(add-to-list 'package-archives
+             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-packages)
 ;;(require 'init-exwm)
 (require 'init-hippie-expand)
 (require 'init-fci)
-(require 'init-elpy)
 (require 'init-magit)
 (require 'init-ace-jump)
 (require 'init-multiple-cursors)
@@ -37,15 +41,20 @@
 (require 'init-folding)
 (require 'init-recentf)
 (require 'init-slime)
-;;(require 'init-sessions)
+(require 'init-sessions)
 (require 'init-whitespace)
 (require 'init-editorconfig)
 (require 'init-go)
+(require 'init-js)
+
+;;(load-file "emacs-js/emacs-js.el")
 (require-package 'beacon)
 (require-package 'gnuplot)
 
 ;;(add-to-list 'load-path "~/.emacs.d/emacs-js/")
-(require 'init-js)
+;;(require 'init-js)
+
+(require 'init-elpy)
 
 (beacon-mode t)
 
@@ -53,7 +62,7 @@
 (unless (server-running-p)
   (server-start))
 
-;;(load-theme 'misterioso)
+(load-theme 'sanityinc-tomorrow-night)
 
 ;;(set-default-font "Mikachan-16")
 ;;(setq default-line-spacing 0)
@@ -65,7 +74,9 @@
 ;;(set-default-font "DejaVuSansMono-13")
 ;;(set-default-font "TlwgMono-12")
 (ignore-errors
-  (set-default-font "FantasqueSansMono-14"))
+  (set-default-font "monospace"))
 
 (require 'init-intro)
 (provide 'init)
+
+;;; init.el ends here

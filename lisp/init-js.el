@@ -22,7 +22,7 @@
 (require-package 'grunt)
 (require-package 'xref-js2)
 (require-package 'yasnippet)
-(require-package 'jade)
+(require-package 'indium)
 
 (require 'js2-mode)
 (require 'js2-refactor)
@@ -35,11 +35,13 @@
 (require 'grunt)
 (require 'xref-js2)
 (require 'yasnippet)
-(require 'jade)
+(require 'indium)
+(require 'ag)
+(require 'wgrep-ag)
 
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-js"))
+(require 'emacs-js)
 ;;(require 'emacs-js-setup)
-(require 'js2-refactor)
-(require 'jade)
 
 ;; start emacs-js 0.1 (https://github.com/foretagsplatsen/emacs-js)
 (add-hook 'js-mode-hook #'setup-js-buffer)
