@@ -39,6 +39,8 @@
 (require 'ag)
 (require 'wgrep-ag)
 
+(defalias 'jade-interaction-mode 'indium-interaction-mode)
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-js"))
 (require 'emacs-js)
 ;;(require 'emacs-js-setup)
