@@ -3,7 +3,8 @@
 ;;(require-package 'org)
 ;;(require-package 'org-habit)
 ;;(require-package 'org-checklist)
-(require-package 'org-plus-contrib '(20160829))
+(require-package 'org-plus-contrib '(20180409))
+(require-package 'org-mime)
 (require 'bbdb)
 (require 'smex)
 (require 'org)
@@ -29,7 +30,7 @@
 
 ;;(if (boundp 'org-mode-user-lisp-path)
 ;;    (add-to-list 'load-path org-mode-user-lisp-path)
-;;  (add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp")))
+;;  (add-to-list 'load-path (expand-file-name "~/org-mode/lisp")))
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
@@ -45,7 +46,7 @@
 ;;
 (if (boundp 'org-user-agenda-files)
     (setq org-agenda-files org-user-agenda-files)
-  (setq org-agenda-files (quote ("~/KISSCALLS/org"))))
+  (setq org-agenda-files (quote ("~/org"))))
 
 ;; Custom Key Bindings
 (global-set-key (kbd "C-c C-t") 'bh/org-todo)
@@ -172,29 +173,29 @@
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
-(setq org-directory "~/git/org")
-(setq org-default-notes-file "~/git/org/refile.org")
+(setq org-directory "~/org")
+(setq org-default-notes-file "~/org/refile.org")
 
 ;; I use C-c c to start capture mode
 (global-set-key (kbd "C-c c") 'org-capture)
 
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/git/org/refile.org")
+      (quote (("t" "todo" entry (file "~/org/refile.org")
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("r" "respond" entry (file "~/git/org/refile.org")
+              ("r" "respond" entry (file "~/org/refile.org")
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-              ("n" "note" entry (file "~/git/org/refile.org")
+              ("n" "note" entry (file "~/org/refile.org")
                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
+              ("j" "Journal" entry (file+datetree "~/org/diary.org")
                "* %?\n%U\n" :clock-in t :clock-resume t)
-              ("w" "org-protocol" entry (file "~/git/org/refile.org")
+              ("w" "org-protocol" entry (file "~/org/refile.org")
                "* TODO Review %c\n%U\n" :immediate-finish t)
-              ("m" "Meeting" entry (file "~/git/org/refile.org")
+              ("m" "Meeting" entry (file "~/org/refile.org")
                "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-              ("p" "Phone call" entry (file "~/git/org/refile.org")
+              ("p" "Phone call" entry (file "~/org/refile.org")
                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-              ("h" "Habit" entry (file "~/git/org/refile.org")
+              ("h" "Habit" entry (file "~/org/refile.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
 ;; Remove empty LOGBOOK drawers on clock out
@@ -210,7 +211,7 @@
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9))))
 
-; Use full outline paths for refile targets - we file directly with IDO
+                                        ; Use full outline paths for refile targets - we file directly with IDO
 (setq org-refile-use-outline-path (quote file))
 
 ; Targets complete directly with IDO
@@ -489,11 +490,12 @@ A prefix arg forces clock in of the default task."
 (setq org-agenda-clockreport-parameter-plist
       (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
 
-; Set default column view headings: Task Effort Clock_Summary
-(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
+;; Set default column view headings: Task Effort Clock_Summary
+;;(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
+;; (setq org-columns-default-format "%25ITEM %TODO %3PRIORITY %TAGS")
 
-; global Effort estimate values
-; global STYLE property values for completion
+;; global Effort estimate values
+;; global STYLE property values for completion
 (setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                                     ("STYLE_ALL" . "habit"))))
 
@@ -855,7 +857,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (require 'ox-ascii)
 
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
-(setq org-plantuml-jar-path "~/java/plantuml.jar")
+(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
 
 (add-hook 'org-babel-after-execute-hook 'bh/display-inline-images 'append)
 
@@ -999,7 +1001,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
               ;; Miscellaneous pages for other websites
               ;; org are the org-files that generate the content
               ("org-org"
-               :base-directory "~/git/org/"
+               :base-directory "~/org/"
                :publishing-directory "/ssh:www-data@www:~/org"
                :recursive t
                :section-numbers nil
@@ -1017,7 +1019,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
               ;; org-mode-doc is the top-level project that gets published
               ;; This uses the same target directory as the 'doc' project
               ("org-mode-doc-org"
-               :base-directory "~/git/org-mode-doc/"
+               :base-directory "~/org-mode-doc/"
                :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
                :recursive t
                :section-numbers nil
@@ -1031,7 +1033,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
                :author-info nil
                :creator-info nil)
               ("org-mode-doc-extra"
-               :base-directory "~/git/org-mode-doc/"
+               :base-directory "~/org-mode-doc/"
                :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
                :base-extension "css\\|pdf\\|png\\|jpg\\|gif\\|org"
                :publishing-function org-publish-attachment
@@ -1460,7 +1462,7 @@ so change the default 'F' binding in the agenda to allow both"
 (setq org-agenda-skip-timestamp-if-done t)
 
 (setq org-agenda-include-diary nil)
-(setq org-agenda-diary-file "~/git/org/diary.org")
+(setq org-agenda-diary-file "~/org/diary.org")
 
 (setq org-agenda-insert-diary-extract-time t)
 
@@ -1483,10 +1485,18 @@ so change the default 'F' binding in the agenda to allow both"
 ;; Start the weekly agenda on Monday
 (setq org-agenda-start-on-weekday 1)
 
-;; Enable display of the time grid so we can see the marker for the current time
-(setq org-agenda-time-grid (quote ((daily today remove-match)
+(setq org-agenda-time-grid (quote ((daily today require-timed) ;;  remove-match
+                                   (0900 1100 1300 1500 1700)
                                    #("----------------" 0 16 (org-heading t))
-                                   (0900 1100 1300 1500 1700))))
+                                   )))
+
+;; ;; Enable display of the time grid so we can see the marker for the current time
+;; (setq org-agenda-time-grid
+;;       '((daily today require-timed)
+;;         (900 1100 1300 1500 1700)
+;;         "......"
+;;         "----------------"))
+
 
 ;; Display tags farther right
 (setq org-agenda-tags-column -102)
@@ -1592,8 +1602,8 @@ Late deadlines first, then scheduled, then non-late deadlines"
 ;; org-mode-user-contrib-lisp-path
 ;;
 (if (boundp 'org-mode-user-contrib-lisp-path)
-    (add-to-list 'load-path org-mode-user-contrib-lisp-path)
-  (add-to-list 'load-path (expand-file-name "~/git/org-mode/contrib/lisp")))
+    (add-to-list 'load-path org-mode-user-contrib-lisp-path))
+  ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpaorg-mode/contrib/lisp")))
 
 (require 'org-checklist)
 
@@ -1785,7 +1795,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq org-remove-highlights-with-change t)
 
-(add-to-list 'Info-default-directory-list "~/git/org-mode/doc")
+(add-to-list 'Info-default-directory-list "~/org-mode/doc")
 
 (setq org-read-date-prefer-future 'time)
 

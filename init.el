@@ -5,9 +5,10 @@
 (package-initialize)
 
 (require 'package)
-(add-to-list 'package-archives
-             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
-
+;; (add-to-list 'package-archives
+;;              '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+;; (add-to-list 'package-archives
+;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-packages)
 ;;(require 'init-exwm)
@@ -31,7 +32,10 @@
 (require 'init-ivy)
 (require 'init-company)
 (require 'init-compat)
-(require 'init-dired)
+
+;;; dired+ no longer in melpa stable
+;;(require 'init-dired)
+
 (require 'init-html)
 (require 'init-vc)
 (require 'init-editing-utils)
@@ -62,7 +66,8 @@
 (unless (server-running-p)
   (server-start))
 
-(load-theme 'sanityinc-tomorrow-night)
+;;(load-theme 'sanityinc-tomorrow-night)
+(color-theme-sanityinc-tomorrow-day)
 
 ;;(set-default-font "Mikachan-16")
 ;;(setq default-line-spacing 0)
@@ -71,11 +76,14 @@
 ;;(setq default-line-spacing 0)
 ;;(set-face-attribute 'default nil :height 100)
 ;;(set-default-font "Inconsolata-14")
-;;(set-default-font "DejaVuSansMono-13")
+;;(set-default-font "DejaVuSansMono-11")
 ;;(set-default-font "TlwgMono-12")
+;; (ignore-errors
+;;   (set-default-font "monospace-10"))
 (ignore-errors
-  (set-default-font "monospace"))
-
+  (set-default-font "SourceCodeProLight-14"))
+(global-unset-key (kbd "C-x C-c"))
+(global-unset-key (kbd "C-x C-z"))
 (require 'init-intro)
 (provide 'init)
 
