@@ -8,6 +8,4 @@
 
 (add-auto-mode 'html-mode "\\.\\(jsp\\|tmpl\\)\\'")
 
-;; Note: ERB is configured in init-ruby-mode
-
 (provide 'init-html)

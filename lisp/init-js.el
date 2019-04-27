@@ -11,6 +11,11 @@
 
 ;; adapted from emacs-js referenced in https://github.com/NicolasPetton/emacs.d/
 
+(setenv "PATH"
+        (concat (getenv "PATH")
+                ":/home/netblue/node-v8.10.0-linux-x64/bin/"))
+(setq exec-path (append exec-path '(/"/home/netblue/node-v8.10.0-linux-x64/bin/")))
+
 (require-package 'js2-mode)
 (require-package 'js2-refactor)
 (require-package 'amd-mode)
