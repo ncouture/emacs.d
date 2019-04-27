@@ -1,15 +1,18 @@
-;;; package --- ncoture's .emacs.d
 ;;; Commentary:
 ;;; Hmph...
 ;;; Code:
 (package-initialize)
 
 (require 'package)
-;; (add-to-list 'package-archives
-;;              '("elpy" . "https://jorgenschaefer.github.io/packages/"))
-;; (add-to-list 'package-archives
-;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+(message "WARNING: configuring 3rd party Emacs package repositories!")
+(add-to-list 'package-archives
+             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
 (require 'init-packages)
 ;;(require 'init-exwm)
 (require 'init-hippie-expand)
