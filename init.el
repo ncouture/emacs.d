@@ -50,6 +50,7 @@
 (require 'init-editorconfig)
 (require 'init-go)
 (require 'init-js)
+(require 'init-typescript)
 
 ;;(load-file "emacs-js/emacs-js.el")
 (require-package 'beacon)
