@@ -4,7 +4,7 @@
 (require 'sphinx-doc)
 
 (elpy-enable)
-(setenv "WORKON_HOME" (expand-file-name "~/.local/share/virtualenvs"))
+(setenv "WORKON_HOME" (expand-file-name "~/.virtualenvs/"))
 (setq elpy-rpc-backend "rope")
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
